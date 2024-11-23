@@ -1,0 +1,585 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "EcoCraft API",
+    "version": "1.0",
+    "description": "API Documentation for EcoCraft",
+    "contact": {
+      "name": "Azhar Bagaskara",
+      "email": "azharbagaskara1@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/api/v1",
+      "description": "Local URL"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Register new user",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "passwordConfirmation": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "email": "takoyaki@gmail.com",
+                "name": "Takoyaki",
+                "password": "password",
+                "passwordConfirmation": "password"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Register success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "id": "673aa4eee4b54a6fe0b5554e",
+                    "name": "Takoyaki",
+                    "email": "takoyaki@gmail.com",
+                    "createdAt": "2024-11-18T02:22:38.652Z",
+                    "updatedAt": "2024-11-18T02:22:38.652Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "validation failed": {
+                    "value": {
+                      "error": {
+                        "message": "Validation failed",
+                        "details": {
+                          "email": ["Email is not valid"],
+                          "password": ["Password minimum 6 characters"]
+                        }
+                      }
+                    }
+                  },
+                  "email already registered": {
+                    "value": {
+                      "error": {
+                        "message": "Email already registered.",
+                        "details": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["users"],
+        "summary": "Get all users",
+        "responses": {
+          "200": {
+            "description": "Success get all users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": [
+                    {
+                      "id": "673aad5a8f2d84b460592716",
+                      "name": "Takoyaki",
+                      "email": "takoyaki@gmail.com",
+                      "createdAt": "2024-11-18T02:58:34.168Z",
+                      "updatedAt": "2024-11-18T02:58:34.168Z"
+                    },
+                    {
+                      "id": "673b5ca56d9ad288b64ecec2",
+                      "name": "Okarun",
+                      "email": "okarun@gmail.com",
+                      "createdAt": "2024-11-18T15:26:29.267Z",
+                      "updatedAt": "2024-11-18T15:26:29.267Z"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Get user by id",
+        "responses": {
+          "200": {
+            "description": "Success get user by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "id": "673b5ca56d9ad288b64ecec2",
+                    "name": "Okarun",
+                    "email": "okarun@gmail.com",
+                    "createdAt": "2024-11-18T15:26:29.267Z",
+                    "updatedAt": "2024-11-18T15:26:29.267Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Login user",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "Login User Takoyaki": {
+                  "value": {
+                    "email": "takoyaki@gmail.com",
+                    "password": "password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Login failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "message": "Email or password is wrong.",
+                    "details": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/current": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Get current user",
+        "responses": {
+          "200": {
+            "description": "Success get current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "id": "673b5cad6d9ad288b64ecec5",
+                    "name": "Takoyaki",
+                    "email": "takoyaki@gmail.com",
+                    "createdAt": "2024-11-18T15:26:37.245Z",
+                    "updatedAt": "2024-11-18T15:26:37.245Z"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["users"],
+        "summary": "Update current user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "passwordConfirmation": {
+                    "type": "string"
+                  },
+                  "currentPassword": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "Update name only": {
+                  "value": {
+                    "name": "Okarun"
+                  }
+                },
+                "Update email only": {
+                  "value": {
+                    "email": "okarun@gmail.com"
+                  }
+                },
+                "Change password": {
+                  "value": {
+                    "password": "newpassword",
+                    "passwordConfirmation": "newpassword",
+                    "currentPassword": "password"
+                  }
+                },
+                "Update all": {
+                  "value": {
+                    "name": "Okarun",
+                    "email": "okarun@gmail.com",
+                    "password": "newpassword",
+                    "passwordConfirmation": "newpassword",
+                    "currentPassword": "password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success update current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "id": "673b5cad6d9ad288b64ecec5",
+                    "name": "Okarun",
+                    "email": "okarun@gmail.com",
+                    "createdAt": "2024-11-18T15:26:37.245Z",
+                    "updatedAt": "2024-11-18T17:28:32.245Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "message": "Password and confirm password do not match.",
+                    "details": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete current user account",
+        "tags": ["users"],
+        "responses": {
+          "200": {
+            "description": "Success delete current user account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Token"
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "accessToken": "",
+                    "refreshToken": ""
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "delete": {
+        "tags": ["users"],
+        "summary": "Log out current user",
+        "responses": {
+          "200": {
+            "description": "Success logout current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Token"
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "accessToken": "",
+                    "refreshToken": ""
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/token": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Get new access token",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refreshToken": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success get new access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Refresh token expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": {
+                    "message": "Refresh token expired. Please login again.",
+                    "details": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": ["other"],
+        "summary": "Check server status",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Return OK",
+            "content": {
+              "text/html": {
+                "example": "OK"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "description": "Authentication for EcoCraft RESTful API using access token",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "Token": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              },
+              "details": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ]
+}
