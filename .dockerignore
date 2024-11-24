@@ -1,0 +1,14 @@
+# Ignore node_modules
+node_modules
+
+# Ignore local development files
+.env
+
+# Ignore build output
+dist
+
+# Ignore version control system files
+.git
+
+# Ignore service-account-key.json
+config/service-account-key.json

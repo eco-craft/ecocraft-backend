@@ -1,1 +1,1 @@
-Place service-account-key.json in this folder.
+Place service-account-key.json in this folder (only for local development).
