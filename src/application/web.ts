@@ -2,7 +2,6 @@ import cors from 'cors';
 import express from 'express';
 import { errorMiddleware } from '../middleware/error.middleware';
 import { userRouter } from '../route/api';
-import { craftRouter } from '../route/craft.routes';
 import { publicRouter } from '../route/public-api';
 
 
@@ -17,7 +16,7 @@ web.use(
 );
 web.use(publicRouter);
 web.use(userRouter);
-web.use(craftRouter);
+
 
 
 

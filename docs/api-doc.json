@@ -519,6 +519,9 @@
       }
     }
   },
+
+
+
   "components": {
     "securitySchemes": {
       "BearerAuth": {
@@ -539,6 +542,43 @@
           },
           "email": {
             "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      }, "Craft": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "materials": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "createdAt": {
             "type": "string"
