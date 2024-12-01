@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import { CustomJWTPayload } from '../types/custom';
+import { UserJWTPayload } from '../models/user.model';
 
 export const random = () => crypto.randomBytes(128).toString('base64');
 
@@ -13,13 +13,13 @@ export const hash = (salt: string, password: string) => {
     .digest('hex');
 };
 
-export const generateAccessToken = (payload: CustomJWTPayload) => {
+export const generateAccessToken = (payload: UserJWTPayload) => {
   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: process.env.ACCESS_TOKEN_EXPIRATION,
   });
 };
 
-export const generateRefreshToken = (payload: CustomJWTPayload) => {
+export const generateRefreshToken = (payload: UserJWTPayload) => {
   return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: process.env.REFRESH_TOKEN_EXPIRATION,
   });
@@ -27,12 +27,12 @@ export const generateRefreshToken = (payload: CustomJWTPayload) => {
 
 export const verifyAccessToken = (
   accessToken: string
-): CustomJWTPayload | 'EXPIRED' | 'INVALID' => {
+): UserJWTPayload | 'EXPIRED' | 'INVALID' => {
   try {
     const decoded = jwt.verify(
       accessToken,
       process.env.ACCESS_TOKEN_SECRET
-    ) as CustomJWTPayload;
+    ) as UserJWTPayload;
     return decoded;
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
@@ -45,12 +45,12 @@ export const verifyAccessToken = (
 
 export const verifyRefreshToken = (
   refreshToken: string
-): CustomJWTPayload | 'EXPIRED' | 'INVALID' => {
+): UserJWTPayload | 'EXPIRED' | 'INVALID' => {
   try {
     const decoded = jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET
-    ) as CustomJWTPayload;
+    ) as UserJWTPayload;
     return decoded;
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {

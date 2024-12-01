@@ -7,5 +7,5 @@ require('dotenv').config();
 const PORT = 8080;
 
 web.listen(PORT, () => {
-  logger.info(`Server is running on http://localhost:8080`);
+  logger.info(`Server is running on http://localhost:${PORT}`);
 });

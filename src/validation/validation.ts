@@ -1,25 +1,30 @@
-import { ResponseError } from '../error/response-error';
-import { AnyZodObject, ZodError } from 'zod';
+import { ZodError, ZodType } from 'zod';
 
-const formatZodErrors = (errors: ZodError['errors']) => {
-  return errors.reduce((acc: Record<string, string[]>, error) => {
-    const path = error.path.join('.');
-    if (!acc[path]) {
-      acc[path] = [];
-    }
-    acc[path].push(error.message);
-    return acc;
-  }, {});
-};
-
-const validate = (schema: AnyZodObject, data: any) => {
-  try {
-    const validatedData = schema.parse(data);
-    return validatedData;
-  } catch (error) {
-    const formattedErrors = formatZodErrors(error.errors);
-    throw new ResponseError(400, 'Validation failed.', formattedErrors);
+export class Validation {
+  static validate<T>(schema: ZodType, data: T): T {
+    return schema.parse(data);
   }
-};
 
-export { validate };
+  static formatZodErrors(errors: ZodError['errors']): Record<string, string[]> {
+    /*
+    Return example:
+      {
+        "email": [
+          "Email is not valid."
+        ],
+        "password": [
+          "Password minimum 6 characters."
+        ]
+      }
+    */
+
+    return errors.reduce((acc: Record<string, string[]>, error) => {
+      const path = error.path.join('.');
+      if (!acc[path]) {
+        acc[path] = [];
+      }
+      acc[path].push(error.message);
+      return acc;
+    }, {});
+  }
+}

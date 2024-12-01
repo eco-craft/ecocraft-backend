@@ -1,63 +1,75 @@
-// src/controller/craft.controller.ts
 import { NextFunction, Request, Response } from 'express';
-import craftService from '../service/craft.service';
+import { CraftService } from '../service/craft.service';
+import {
+  CreateCraftRequest,
+  ListCraftRequest,
+  UpdateCraftRequest,
+} from '../models/craft.model';
 
-const create = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const result = await craftService.createCraftIdea(req.body);
-    res.status(201).json({ data: result });
-  } catch (error) {
-    next(error);
+export class CraftController {
+  static async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = req.body as CreateCraftRequest;
+      const result = await CraftService.create(req.user, request, req.file);
+
+      res.status(201).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
 
-const getAll = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    // Ambil kategori sebagai array (handle kategori tunggal atau lebih)
-    const categories = req.query.categories ? (req.query.categories as string).split(',') : [];
-    const title = req.query.title as string || '';
+  static async list(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request: ListCraftRequest = {
+        title: req.query.title as string,
+      };
 
-    // Panggil service untuk mendapatkan hasil berdasarkan kategori dan judul
-    const result = await craftService.getAllCraftIdeas(categories, title);
-    res.status(200).json({ data: result });
-  } catch (error) {
-    next(error);
+      const result = await CraftService.list(request);
+      res.status(200).json({ 
+        data: result 
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
 
-
-
-const getById = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const result = await craftService.getCraftIdeaById(req.params.id);
-    res.status(200).json({ data: result });
-  } catch (error) {
-    next(error);
+  static async get(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await CraftService.get(req.params.craftId);
+      
+      res.status(200).json({ 
+        data: result 
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
 
-const update = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const result = await craftService.updateCraftIdea(req.params.id, req.body);
-    res.status(200).json({ data: result });
-  } catch (error) {
-    next(error);
+  static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = req.body as UpdateCraftRequest;
+      request.id = req.params.craftId;
+      const result = await CraftService.update(req.user, request, req.file);
+
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
 
-const remove = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const result = await craftService.deleteCraftIdea(req.params.id);
-    res.status(200).json({ data: result });
-  } catch (error) {
-    next(error);
+  static async remove(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await CraftService.remove(req.user, req.params.craftId);
+      
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
-
-export default {
-  create,
-  getAll,
-  getById,
-  update,
-  remove,
-};
+}

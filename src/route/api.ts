@@ -1,27 +1,31 @@
 import express from 'express';
-import craftController from '../controller/craft.controller';
-import userController from '../controller/user.controller';
+import { CraftController } from '../controller/craft.controller';
+import { UserController } from '../controller/user.controller';
 import { authMiddleware } from '../middleware/auth.middleware';
+import multer from 'multer';
 
+const apiRouter = express.Router();
+apiRouter.use(authMiddleware);
 
-const userRouter = express.Router();
-userRouter.use(authMiddleware);
+// Multer configuration
+const upload = multer({ 
+  storage: multer.memoryStorage() 
+});
 
 // User API
-userRouter.get('/api/v1/users/current', userController.getCurrent);
-userRouter.patch('/api/v1/users/current', userController.updateCurrent);
-userRouter.delete('/api/v1/users/current', userController.removeCurrent);
-userRouter.get('/api/v1/users', userController.list);
-userRouter.get('/api/v1/users/:userId', userController.get);
-userRouter.delete('/api/v1/users/logout', userController.logout);
+apiRouter.get('/api/v1/users/current', UserController.getCurrent);
+apiRouter.patch('/api/v1/users/current', upload.single('profilePicture'), UserController.updateCurrent);
+apiRouter.delete('/api/v1/users/current', UserController.removeCurrent);
+apiRouter.get('/api/v1/users', UserController.list);
+apiRouter.get('/api/v1/users/:userId', UserController.get);
+apiRouter.delete('/api/v1/users/logout', UserController.logout);
 
 // Craft API
-userRouter.post('/api/v1/crafts', craftController.create); // Create a new craft idea
-userRouter.get('/api/v1/crafts', craftController.getAll); // Get all craft ideas
-userRouter.get('/api/v1/crafts/:id', craftController.getById); // Get a craft idea by ID
-userRouter.patch('/api/v1/crafts/:id', craftController.update); // Update a craft idea by ID
-userRouter.delete('/api/v1/crafts/:id', craftController.remove); // Delete a craft idea by ID
+apiRouter.post('/api/v1/crafts', upload.single('craftImage'), CraftController.create);
+apiRouter.get('/api/v1/crafts', CraftController.list);
+apiRouter.get('/api/v1/crafts/:craftId', CraftController.get);
+apiRouter.patch('/api/v1/crafts/:craftId', upload.single('craftImage'), CraftController.update);
+apiRouter.delete('/api/v1/crafts/:craftId', CraftController.remove);
 
-
-export { userRouter };
+export { apiRouter };
 

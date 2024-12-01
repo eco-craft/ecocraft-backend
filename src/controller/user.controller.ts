@@ -1,135 +1,131 @@
 import { NextFunction, Request, Response } from 'express';
-import userService from '../service/user.service';
+import { UserService } from '../service/user.service';
+import {
+  RegisterUserRequest,
+  LoginUserRequest,
+  UserJWTPayload,
+  UpdateUserRequest,
+  GetNewAccessTokenRequest,
+  LogoutUserRequest,
+} from '../models/user.model';
 
-const register = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const result = await userService.register(req.body);
+export class UserController {
+  static async register(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = req.body as RegisterUserRequest;
+      const result = await UserService.register(request);
 
-    res.status(201).json({
-      data: result,
-    });
-  } catch (error) {
-    next(error);
+      res.status(201).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
 
-const login = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const result = await userService.login(req.body, req.get('User-Agent'));
+  static async login(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = req.body as LoginUserRequest;
+      const result = await UserService.login(request, req.get('User-Agent'));
 
-    res.status(200).json({ data: result });
-  } catch (error) {
-    next(error);
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
 
-const getCurrent = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const userId = req.user.id;
+  static async getCurrent(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = req.user as UserJWTPayload;
+      const result = await UserService.getCurrent(user);
 
-    const result = await userService.getCurrent({ userId });
-
-    res.status(200).json({
-      data: result,
-    });
-  } catch (error) {
-    next(error);
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
 
-const get = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const userId = req.params.userId;
+  static async get(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = req.params.userId;
+      const result = await UserService.get(userId);
 
-    const result = await userService.get({ userId });
-
-    res.status(200).json({
-      data: result,
-    });
-  } catch (error) {
-    next(error);
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
 
-const list = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const result = await userService.list();
+  static async list(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await UserService.list();
 
-    res.status(200).json({
-      data: result,
-    });
-  } catch (error) {
-    next(error);
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
 
-const updateCurrent = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const userId = req.user.id;
-    const data = req.body;
-    data.id = userId;
+  static async updateCurrent(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = req.body as UpdateUserRequest;
+      const result = await UserService.updateCurrent(req.user, request, req.file);
 
-    const result = await userService.updateCurrent(data);
-
-    res.status(200).json({
-      data: result,
-    });
-  } catch (error) {
-    next(error);
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
 
-const logout = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const data = req.body;
-    const result = await userService.logout(data);
+  static async logout(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = req.body as LogoutUserRequest;
+      const result = await UserService.logout(request);
 
-    res.status(200).json({
-      data: result,
-    });
-  } catch (error) {
-    next(error);
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
 
-const removeCurrent = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const userId = req.user.id;
-    const result = await userService.removeCurrent({ userId });
+  static async removeCurrent(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await UserService.removeCurrent(req.user);
 
-    res.status(200).json({
-      data: result,
-    });
-  } catch (error) {
-    next(error);
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
 
-const getNewAccessToken = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const data = req.body;
-    const result = await userService.getNewAccessToken(data);
+  static async getNewAccessToken(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const request = req.body as GetNewAccessTokenRequest;
+      const result = await UserService.getNewAccessToken(request);
 
-    res.status(200).json({
-      data: result,
-    });
-  } catch (error) {
-    next(error);
+      res.status(200).json({
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-};
-
-export default {
-  register,
-  login,
-  getCurrent,
-  get,
-  list,
-  updateCurrent,
-  logout,
-  removeCurrent,
-  getNewAccessToken,
-};
+}

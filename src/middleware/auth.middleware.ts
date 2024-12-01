@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { ResponseError } from '../error/response-error';
 import { verifyAccessToken } from '../utils/auth';
+import { UserJWTPayload } from '../models/user.model';
 
 export const authMiddleware = async (
   req: Request,
@@ -9,7 +10,7 @@ export const authMiddleware = async (
 ) => {
   try {
     const authHeader = req.headers['authorization'];
-    
+
     // Split between Bearer and the token
     const accessToken = authHeader && authHeader.split(' ')[1];
 
@@ -26,7 +27,7 @@ export const authMiddleware = async (
       throw new ResponseError(401, 'Invalid access token');
     }
 
-    req.user = decoded;
+    req.user = decoded as UserJWTPayload;
 
     next();
   } catch (error) {

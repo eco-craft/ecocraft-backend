@@ -40,17 +40,13 @@
                   },
                   "password": {
                     "type": "string"
-                  },
-                  "passwordConfirmation": {
-                    "type": "string"
                   }
                 }
               },
               "example": {
-                "email": "takoyaki@gmail.com",
-                "name": "Takoyaki",
-                "password": "password",
-                "passwordConfirmation": "password"
+                "email": "momoayase@gmail.com",
+                "name": "Momo Ayase",
+                "password": "password"
               }
             }
           }
@@ -70,11 +66,12 @@
                 },
                 "example": {
                   "data": {
-                    "id": "673aa4eee4b54a6fe0b5554e",
-                    "name": "Takoyaki",
-                    "email": "takoyaki@gmail.com",
-                    "createdAt": "2024-11-18T02:22:38.652Z",
-                    "updatedAt": "2024-11-18T02:22:38.652Z"
+                    "id": "jqpf3p8ymoie6kn0v1vxc6rw",
+                    "name": "Momo Ayase",
+                    "email": "momoayase@gmail.com",
+                    "phone": "",
+                    "address": "",
+                    "photo": "https://robohash.org/jqpf3p8ymoie6kn0v1vxc6rw?set=set4"
                   }
                 }
               }
@@ -85,16 +82,21 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
                 },
                 "examples": {
                   "validation failed": {
                     "value": {
                       "error": {
-                        "message": "Validation failed",
+                        "message": "Validation failed.",
                         "details": {
-                          "email": ["Email is not valid"],
-                          "password": ["Password minimum 6 characters"]
+                          "email": ["Email is not valid."],
+                          "password": ["Password minimum 6 characters."]
                         }
                       }
                     }
@@ -135,18 +137,20 @@
                 "example": {
                   "data": [
                     {
-                      "id": "673aad5a8f2d84b460592716",
+                      "id": "a81ss4pqeiiomalhsgrntk73",
                       "name": "Takoyaki",
                       "email": "takoyaki@gmail.com",
-                      "createdAt": "2024-11-18T02:58:34.168Z",
-                      "updatedAt": "2024-11-18T02:58:34.168Z"
+                      "phone": "",
+                      "address": "",
+                      "photo": "https://robohash.org/a81ss4pqeiiomalhsgrntk73?set=set4"
                     },
                     {
-                      "id": "673b5ca56d9ad288b64ecec2",
-                      "name": "Okarun",
-                      "email": "okarun@gmail.com",
-                      "createdAt": "2024-11-18T15:26:29.267Z",
-                      "updatedAt": "2024-11-18T15:26:29.267Z"
+                      "id": "jqpf3p8ymoie6kn0v1vxc6rw",
+                      "name": "Momo Ayase",
+                      "email": "momoayase@gmail.com",
+                      "phone": "",
+                      "address": "",
+                      "photo": "https://robohash.org/jqpf3p8ymoie6kn0v1vxc6rw?set=set4"
                     }
                   ]
                 }
@@ -175,11 +179,12 @@
                 },
                 "example": {
                   "data": {
-                    "id": "673b5ca56d9ad288b64ecec2",
-                    "name": "Okarun",
-                    "email": "okarun@gmail.com",
-                    "createdAt": "2024-11-18T15:26:29.267Z",
-                    "updatedAt": "2024-11-18T15:26:29.267Z"
+                    "id": "jqpf3p8ymoie6kn0v1vxc6rw",
+                    "name": "Momo Ayase",
+                    "email": "momoayase@gmail.com",
+                    "phone": "",
+                    "address": "",
+                    "photo": "https://robohash.org/jqpf3p8ymoie6kn0v1vxc6rw?set=set4"
                   }
                 }
               }
@@ -208,13 +213,9 @@
                   }
                 }
               },
-              "examples": {
-                "Login User Takoyaki": {
-                  "value": {
-                    "email": "takoyaki@gmail.com",
-                    "password": "password"
-                  }
-                }
+              "example": {
+                "email": "takoyaki@gmail.com",
+                "password": "password"
               }
             }
           }
@@ -240,7 +241,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
                 },
                 "example": {
                   "error": {
@@ -273,11 +279,12 @@
                 },
                 "example": {
                   "data": {
-                    "id": "673b5cad6d9ad288b64ecec5",
+                    "id": "a81ss4pqeiiomalhsgrntk73",
                     "name": "Takoyaki",
                     "email": "takoyaki@gmail.com",
-                    "createdAt": "2024-11-18T15:26:37.245Z",
-                    "updatedAt": "2024-11-18T15:26:37.245Z"
+                    "phone": "",
+                    "address": "",
+                    "photo": "https://robohash.org/a81ss4pqeiiomalhsgrntk73?set=set4"
                   }
                 }
               }
@@ -290,7 +297,7 @@
         "summary": "Update current user",
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -300,42 +307,24 @@
                   "email": {
                     "type": "string"
                   },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "currentPassword": {
+                    "type": "string"
+                  },
                   "password": {
                     "type": "string"
                   },
                   "passwordConfirmation": {
                     "type": "string"
                   },
-                  "currentPassword": {
-                    "type": "string"
-                  }
-                }
-              },
-              "examples": {
-                "Update name only": {
-                  "value": {
-                    "name": "Okarun"
-                  }
-                },
-                "Update email only": {
-                  "value": {
-                    "email": "okarun@gmail.com"
-                  }
-                },
-                "Change password": {
-                  "value": {
-                    "password": "newpassword",
-                    "passwordConfirmation": "newpassword",
-                    "currentPassword": "password"
-                  }
-                },
-                "Update all": {
-                  "value": {
-                    "name": "Okarun",
-                    "email": "okarun@gmail.com",
-                    "password": "newpassword",
-                    "passwordConfirmation": "newpassword",
-                    "currentPassword": "password"
+                  "profilePicture": {
+                    "type": "string",
+                    "format": "binary"
                   }
                 }
               }
@@ -357,11 +346,12 @@
                 },
                 "example": {
                   "data": {
-                    "id": "673b5cad6d9ad288b64ecec5",
-                    "name": "Okarun",
-                    "email": "okarun@gmail.com",
-                    "createdAt": "2024-11-18T15:26:37.245Z",
-                    "updatedAt": "2024-11-18T17:28:32.245Z"
+                    "id": "a81ss4pqeiiomalhsgrntk73",
+                    "name": "Takoyaki",
+                    "email": "takoyaki@gmail.com",
+                    "phone": "081234567890",
+                    "address": "Bandung",
+                    "photo": "https://storage.googleapis.com/ecocraft-storage/users/padoru-mugi_qdz86fc9.jpg"
                   }
                 }
               }
@@ -372,7 +362,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
                 },
                 "example": {
                   "error": {
@@ -417,6 +412,21 @@
       "delete": {
         "tags": ["users"],
         "summary": "Log out current user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refreshToken": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success logout current user",
@@ -448,6 +458,7 @@
         "summary": "Get new access token",
         "security": [],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -487,11 +498,362 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
                 },
                 "example": {
                   "error": {
                     "message": "Refresh token expired. Please login again.",
+                    "details": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/crafts": {
+      "post": {
+        "tags": ["crafts"],
+        "summary": "Create new craft",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "materials": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "steps": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "craftImage": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create craft success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Craft"
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "id": "rbwa3vsidsun6fofhu35xroj",
+                    "title": "Plastic Rocket",
+                    "image": "https://storage.googleapis.com/ecocraft-storage/crafts/bocchi-desu_av7cm44b.jpg",
+                    "materials": ["Paper", "Glue", "Paint"],
+                    "steps": ["Tear paper", "Mix glue", "Apply to form"],
+                    "user": {
+                      "id": "a81ss4pqeiiomalhsgrntk73",
+                      "name": "Takoyaki",
+                      "photo": "https://robohash.org/a81ss4pqeiiomalhsgrntk73?set=set4"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                },
+                "examples": {
+                  "validation failed": {
+                    "value": {
+                      "error": {
+                        "message": "Validation failed.",
+                        "details": {
+                          "title": ["Title is required."],
+                          "materials": ["Materials is required."],
+                          "steps": ["Steps is required."]
+                        }
+                      }
+                    }
+                  },
+                  "image required": {
+                    "value": {
+                      "error": {
+                        "message": "Craft image is required.",
+                        "details": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["crafts"],
+        "summary": "Get all crafts",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "description": "Filter crafts by title.",
+            "schema": {
+              "type": "string",
+              "example": "Plastic Rocket"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success get all crafts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Craft"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": [
+                    {
+                      "id": "rbwa3vsidsun6fofhu35xroj",
+                      "title": "Plastic Rocket",
+                      "image": "https://storage.googleapis.com/ecocraft-storage/crafts/bocchi-desu_av7cm44b.jpg",
+                      "materials": ["Paper", "Glue", "Paint"],
+                      "steps": ["Tear paper", "Mix glue", "Apply to form"],
+                      "user": {
+                        "id": "a81ss4pqeiiomalhsgrntk73",
+                        "name": "Takoyaki",
+                        "photo": "https://robohash.org/a81ss4pqeiiomalhsgrntk73?set=set4"
+                      }
+                    },
+                    {
+                      "id": "rbwa3vsidsun6fofhu35xroj",
+                      "title": "Plastic Rocket",
+                      "image": "https://storage.googleapis.com/ecocraft-storage/crafts/bocchi-desu_av7cm44b.jpg",
+                      "materials": ["Paper", "Glue", "Paint"],
+                      "steps": ["Tear paper", "Mix glue", "Apply to form"],
+                      "user": {
+                        "id": "a81ss4pqeiiomalhsgrntk73",
+                        "name": "Takoyaki",
+                        "photo": "https://robohash.org/a81ss4pqeiiomalhsgrntk73?set=set4"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/crafts/{craftId}": {
+      "get": {
+        "tags": ["crafts"],
+        "summary": "Get craft by id",
+        "responses": {
+          "200": {
+            "description": "Success get craft by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Craft"
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "id": "pc7i6glglinjilai2st6snyy",
+                    "title": "Plastic Rocket",
+                    "image": "https://storage.googleapis.com/ecocraft-storage/crafts/Some_old_Lofi_tape_yqec9s8f.jpg",
+                    "materials": ["Paper", "Glue", "Paint"],
+                    "steps": ["Tear paper", "Mix glue", "Apply to form"],
+                    "user": {
+                      "id": "a81ss4pqeiiomalhsgrntk73",
+                      "name": "Takoyaki",
+                      "photo": "https://storage.googleapis.com/ecocraft-storage/users/padoru-mugi_qdz86fc9.jpg"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["crafts"],
+        "summary": "Update craft",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "materials": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "steps": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "craftImage": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update craft success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Craft"
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "id": "rbwa3vsidsun6fofhu35xroj",
+                    "title": "Plastic Rocket",
+                    "image": "https://storage.googleapis.com/ecocraft-storage/crafts/bocchi-desu_av7cm44b.jpg",
+                    "materials": ["Paper", "Glue", "Paint"],
+                    "steps": ["Tear paper", "Mix glue", "Apply to form"],
+                    "user": {
+                      "id": "a81ss4pqeiiomalhsgrntk73",
+                      "name": "Takoyaki",
+                      "photo": "https://robohash.org/a81ss4pqeiiomalhsgrntk73?set=set4"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden update craft because not the owner",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                },
+                "example": {
+                  "error": {
+                    "message": "Unauthorized to update this craft idea.",
+                    "details": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["crafts"],
+        "summary": "Delete craft ",
+        "responses": {
+          "200": {
+            "description": "Success delete craft",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Craft"
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "id": "rbwa3vsidsun6fofhu35xroj",
+                    "title": "Plastic Rocket",
+                    "image": "https://storage.googleapis.com/ecocraft-storage/crafts/el_do1mrbx9.png",
+                    "materials": ["Paper", "Glue"],
+                    "steps": ["Tear paper", "Mix glue", "Apply to form"],
+                    "user": {
+                      "id": "a81ss4pqeiiomalhsgrntk73",
+                      "name": "Takoyaki",
+                      "photo": "https://robohash.org/a81ss4pqeiiomalhsgrntk73?set=set4"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden delete craft because not the owner",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                },
+                "example": {
+                  "error": {
+                    "message": "Unauthorized to delete this craft idea.",
                     "details": {}
                   }
                 }
@@ -520,8 +882,6 @@
     }
   },
 
-
-
   "components": {
     "securitySchemes": {
       "BearerAuth": {
@@ -543,14 +903,18 @@
           "email": {
             "type": "string"
           },
-          "createdAt": {
+          "phone": {
             "type": "string"
           },
-          "updatedAt": {
+          "address": {
+            "type": "string"
+          },
+          "photo": {
             "type": "string"
           }
         }
-      }, "Craft": {
+      },
+      "Craft": {
         "type": "object",
         "properties": {
           "id": {
@@ -574,17 +938,19 @@
               "type": "string"
             }
           },
-          "categories": {
-            "type": "array",
-            "items": {
-              "type": "string"
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "photo": {
+                "type": "string"
+              }
             }
-          },
-          "createdAt": {
-            "type": "string"
-          },
-          "updatedAt": {
-            "type": "string"
           }
         }
       },
@@ -602,16 +968,11 @@
       "Error": {
         "type": "object",
         "properties": {
-          "error": {
-            "type": "object",
-            "properties": {
-              "message": {
-                "type": "string"
-              },
-              "details": {
-                "type": "object"
-              }
-            }
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "object"
           }
         }
       }
