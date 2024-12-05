@@ -3,6 +3,7 @@ import { CraftController } from '../controller/craft.controller';
 import { UserController } from '../controller/user.controller';
 import { authMiddleware } from '../middleware/auth.middleware';
 import multer from 'multer';
+import { PredictionController } from '../controller/prediction.controller';
 
 const apiRouter = express.Router();
 apiRouter.use(authMiddleware);
@@ -26,6 +27,11 @@ apiRouter.get('/api/v1/crafts', CraftController.list);
 apiRouter.get('/api/v1/crafts/:craftId', CraftController.get);
 apiRouter.patch('/api/v1/crafts/:craftId', upload.single('craftImage'), CraftController.update);
 apiRouter.delete('/api/v1/crafts/:craftId', CraftController.remove);
+
+// Prediction API
+apiRouter.post('/api/v1/predictions', upload.single('materialImage'), PredictionController.predict);
+apiRouter.get('/api/v1/predictions', PredictionController.list);
+apiRouter.get('/api/v1/predictions/:predictionId', PredictionController.get);
 
 export { apiRouter };
 

@@ -863,6 +863,241 @@
         }
       }
     },
+    "/predictions": {
+      "post": {
+        "tags": ["predictions"],
+        "summary": "Predict the material",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "materialImage": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Predict material success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "result": {
+                          "type": "string"
+                        },
+                        "percentage": {
+                          "type": "string"
+                        },
+                        "crafts": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Craft"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "data": {
+                        "result": "Garpu",
+                        "percentage": "99.90%",
+                        "crafts": [
+                          {
+                            "id": "s3blvc8wkbjqfwjam60djrsa",
+                            "title": "Roket Plastik",
+                            "image": "https://storage.googleapis.com/ecocraft-storage/crafts/290975_woie8f56.jpg",
+                            "materials": ["Paper", "garpu", "Paint"],
+                            "steps": [
+                              "Tear paper",
+                              "Mix glue",
+                              "Apply to form"
+                            ],
+                            "user": {
+                              "id": "a81ss4pqeiiomalhsgrntk73",
+                              "name": "Takoyaki",
+                              "photo": "https://storage.googleapis.com/ecocraft-storage/users/padoru-mugi_qdze6fc9.jpg"
+                            }
+                          },
+                          {
+                            "id": "xedn67wint5ibge7qvip9bsw",
+                            "title": "Roket Plastik",
+                            "image": "https://storage.googleapis.com/ecocraft-storage/crafts/anime_gun_ex_fwnjcplo.jpg",
+                            "materials": ["garpu", "Glue", "Paint"],
+                            "steps": [
+                              "Tear paper",
+                              "Mix glue",
+                              "Apply to form"
+                            ],
+                            "user": {
+                              "id": "a81ss4pqeiiomalhsgrntk73",
+                              "name": "Takoyaki",
+                              "photo": "https://storage.googleapis.com/ecocraft-storage/users/padoru-mugi_qdzh6fc9.jpg"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "failed predict material": {
+                    "value": {
+                      "data": {
+                        "result": "No material found.",
+                        "percentage": "0.00%",
+                        "crafts": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["predictions"],
+        "summary": "Get all prediction history",
+        "responses": {
+          "200": {
+            "description": "Success get all prediction history",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "result": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": [
+                    {
+                      "id": "lsittcvhjomd992h3ilunlt6",
+                      "result": "Garpu",
+                      "createdAt": "Dec 5, 2024, 2:54:55 PM"
+                    },
+                    {
+                      "id": "zsowlzztpis1zpjkhchu1yvi",
+                      "result": "Garpu",
+                      "createdAt": "Dec 5, 2024, 2:53:24 PM"
+                    },
+                    {
+                      "id": "htwfvmwn59qj6ue0fzs5yj3w",
+                      "result": "Garpu",
+                      "createdAt": "Dec 5, 2024, 2:51:28 PM"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/predictions/{predictionId}": {
+      "get": {
+        "tags": ["predictions"],
+        "summary": "Get prediction history detail by id",
+        "responses": {
+          "200": {
+            "description": "Success get prediction history detail by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "materialImage": {
+                          "type": "string"
+                        },
+                        "result": {
+                          "type": "string"
+                        },
+                        "percentage": {
+                          "type": "string"
+                        },
+                        "crafts": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Craft"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "data": {
+                    "id": "lsittcvfjomd992h3dlunlt6",
+                    "materialImage": "https://storage.googleapis.com/ecocraft-storage/predictions/fork_meqxae50.jpg",
+                    "result": "Garpu",
+                    "percentage": "99.90%",
+                    "crafts": [
+                      {
+                        "id": "s3blvc8wkbjhfwjam60tjrsa",
+                        "title": "Roket Plastik",
+                        "image": "https://storage.googleapis.com/ecocraft-storage/crafts/290975_woie8e56.jpg",
+                        "materials": ["Paper", "garpu", "Paint"],
+                        "steps": ["Tear paper", "Mix glue", "Apply to form"],
+                        "user": {
+                          "id": "a81ss4pqeiiomalhsgrntk73",
+                          "name": "Takoyaki",
+                          "photo": "https://storage.googleapis.com/ecocraft-storage/users/padoru-mugi_qdz86fc9.jpg"
+                        }
+                      },
+                      {
+                        "id": "xsdn67wint5ibge7qyip9bsw",
+                        "title": "Roket Plastik",
+                        "image": "https://storage.googleapis.com/ecocraft-storage/crafts/anime_gun_ex_fwneeplo.jpg",
+                        "materials": ["garpu", "Glue", "Paint"],
+                        "steps": ["Tear paper", "Mix glue", "Apply to form"],
+                        "user": {
+                          "id": "a81ss4pqeiiomalhsgrntk73",
+                          "name": "Takoyaki",
+                          "photo": "https://storage.googleapis.com/ecocraft-storage/users/padoru-mugi_qdzw6fc9.jpg"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "tags": ["other"],
