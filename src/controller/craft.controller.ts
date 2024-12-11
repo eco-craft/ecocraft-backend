@@ -81,7 +81,7 @@ export class CraftController {
   static async createFromJSON(req: Request, res: Response, next: NextFunction) {
     try {
       // Define the path to the JSON file
-      const filePath = './src/data/data-tutorial-1.json';
+      const filePath = './data/data-tutorial-1.json';
 
       // Read the JSON file
       const data = await fs.promises.readFile(filePath, 'utf8');

@@ -12,3 +12,6 @@ dist
 
 # Ignore service-account-key.json
 config/service-account-key.json
+
+# Ignore data folder which used for development only
+data
