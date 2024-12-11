@@ -132,4 +132,4 @@ dist
 
 config/service-account-key.json
 
-src/data
+data
