@@ -6,6 +6,8 @@ require('dotenv').config();
 
 const PORT = 8080;
 
-web.listen(PORT, () => {
+const server = web.listen(PORT, () => {
   logger.info(`Server is running on http://localhost:${PORT}`);
 });
+
+server.timeout = 600000;

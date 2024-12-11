@@ -45,6 +45,13 @@ export type ListCraftRequest = {
   title?: string;
 };
 
+export type CreateCraftFromJSONRequest = {
+  title: string;
+  image: string;
+  materials: string[];
+  steps: string[];
+}
+
 // Response function
 export function toCraftResponse(craft: Craft, user: UserResponse): CraftResponse {
   return {

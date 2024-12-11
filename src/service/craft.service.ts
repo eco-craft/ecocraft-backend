@@ -4,6 +4,7 @@ import {
   Craft,
   CraftResponse,
   craftsRef,
+  CreateCraftFromJSONRequest,
   CreateCraftRequest,
   ListCraftRequest,
   toCraftResponse,
@@ -167,5 +168,37 @@ export class CraftService {
     const userData = await UserService.get(user.id);
 
     return toCraftResponse(craft, userData);
+  }
+
+  static async createFromJson(
+    user: UserJWTPayload,
+    request: CreateCraftFromJSONRequest
+  ): Promise<CraftResponse> {
+    const validatedData = Validation.validate(CraftValidation.CREATE_FROM_JSON, request);
+
+    if (user.email !== 'ecocraft@gmail.com') {
+      throw new ResponseError(403, 'Unauthorized to import data.');
+    }
+
+    const newId = createId();
+
+    const newCraft: Craft = {
+      id: newId,
+      title: validatedData.title,
+      image: validatedData.image,
+      materials: validatedData.materials,
+      steps: validatedData.steps,
+      userId: user.id,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    // Store in database
+    await craftsRef.doc(newId).set(newCraft);
+
+    // Get user data from user service
+    const userData = await UserService.get(user.id);
+
+    return toCraftResponse(newCraft, userData);
   }
 }

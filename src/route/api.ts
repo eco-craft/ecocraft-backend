@@ -27,6 +27,7 @@ apiRouter.get('/api/v1/crafts', CraftController.list);
 apiRouter.get('/api/v1/crafts/:craftId', CraftController.get);
 apiRouter.patch('/api/v1/crafts/:craftId', upload.single('craftImage'), CraftController.update);
 apiRouter.delete('/api/v1/crafts/:craftId', CraftController.remove);
+apiRouter.get('/api/v1/crafts-import', CraftController.createFromJSON);
 
 // Prediction API
 apiRouter.post('/api/v1/predictions', upload.single('materialImage'), PredictionController.predict);

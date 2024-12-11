@@ -17,6 +17,25 @@ export class CraftValidation {
       .nonempty('At least one step is required.'),
   });
 
+  static readonly CREATE_FROM_JSON: ZodType = z.object({
+    title: z.string({
+      required_error: 'Title is required.',
+    }),
+    image: z.string({
+      required_error: 'Image is required.',
+    }),
+    materials: z
+      .array(z.string(), {
+        required_error: 'Materials are required.',
+      })
+      .nonempty('At least one material is required.'),
+    steps: z
+      .array(z.string(), {
+        required_error: 'Steps are required.',
+      })
+      .nonempty('At least one step is required.'),
+  });
+
   static readonly UPDATE: ZodType = z.object({
     id: z.string({
       required_error: 'ID is required.',
