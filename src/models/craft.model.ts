@@ -1,4 +1,5 @@
 import { db } from '../application/database';
+import { timeFormatter } from '../utils/time';
 import { UserResponse } from './user.model';
 
 // Database document schema
@@ -25,6 +26,7 @@ export type CraftResponse = {
     name: string;
     photo: string;
   };
+  createdAt: string;
 };
 
 // Request schema
@@ -47,6 +49,8 @@ export type ListCraftRequest = {
 
 // Response function
 export function toCraftResponse(craft: Craft, user: UserResponse): CraftResponse {
+  const formattedDate = timeFormatter.format(new Date(craft.createdAt));
+
   return {
     id: craft.id,
     title: craft.title,
@@ -58,6 +62,7 @@ export function toCraftResponse(craft: Craft, user: UserResponse): CraftResponse
       name: user.name,
       photo: user.photo,
     },
+    createdAt: formattedDate
   };
 }
 

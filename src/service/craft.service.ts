@@ -59,7 +59,7 @@ export class CraftService {
 
     const Fuse = (await import('fuse.js')).default;
 
-    const snapshot = await craftsRef.get();
+    const snapshot = await craftsRef.orderBy('createdAt', 'desc').get();
     let crafts: Craft[] = snapshot.docs.map((doc) => ({
       ...doc.data(),
     })) as Craft[];
@@ -132,7 +132,9 @@ export class CraftService {
 
     await craftsRef.doc(validatedData.id).update(validatedData);
 
-    const updatedCraft = (await craftsRef.doc(validatedData.id).get()).data() as Craft;
+    const updatedCraft = (
+      await craftsRef.doc(validatedData.id).get()
+    ).data() as Craft;
 
     // Get user data from user service
     const userData = await UserService.get(updatedCraft.userId);
@@ -144,7 +146,6 @@ export class CraftService {
     user: UserJWTPayload,
     craftId: string
   ): Promise<CraftResponse> {
-
     const doc = await craftsRef.doc(craftId).get();
     if (!doc.exists) {
       throw new ResponseError(404, 'Craft idea not found.');
