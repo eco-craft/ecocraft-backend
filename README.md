@@ -13,3 +13,12 @@ npm run dev
 
 ### API Documentation
 API documentation can be accessed in `http://localhost:8080/api/v1/docs`
+
+## EcoCraft Cloud Architecture
+This is the EcoCraft cloud architecture:
+
+![Architecture](docs/EcoCraft_Cloud_Architecture.png)
+
+- Backend: Cloud Run hosts both our RESTful API and machine learning service. We chose Cloud Run for its seamless integration with CI/CD pipelines using Cloud Build, streamlining development and deployment.
+- Database: Firestore, a NoSQL solution, manages flexible data structures.
+- Storage: Cloud Storage handles craft images, user photos, and other files.
